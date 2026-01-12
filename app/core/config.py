@@ -1,3 +1,5 @@
+import os
+
 class Config:
     
     # AWS KEYS
@@ -30,3 +32,4 @@ class Config:
 
     # Local
     UPLOAD_DIR = os.getenv("UPLOAD_DIR", "./uploads")
+
