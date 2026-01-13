@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 def get_state(request: Request) -> AppState:
-    return request.app.state
+    return request.app.state.app_state
 
 # POST /upload
 @router.post("/upload", response_model = UploadResponse)
@@ -38,7 +38,7 @@ async def upload_document(
 
     try:
         pdf_bytes = await file.read()
-        result = state.doc_processor.process_pdf(pdf_bytes, file.filename)
+        result = state.doc_processor.process_document(pdf_bytes, file.filename)
 
         state.document_store[result["doc_id"]] = result
 
@@ -64,7 +64,7 @@ async def query_documents(request: Request, body: QueryRequest):
         raise HTTPException(status_code = 500, detail = "RAG system is not intialized")
 
     try:
-        result = state.rag_system.query(body.query, k = body.top_k or Config.TOP_K_CHUNKS)
+        result = state.rag_system.query(body.query, top_k = body.top_k or Config.TOP_K_CHUNKS)
 
         return QueryResponse(
             query = result["query"],

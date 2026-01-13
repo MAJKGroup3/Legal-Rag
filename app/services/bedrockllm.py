@@ -7,12 +7,12 @@ class BedrockLLM:
         self.client = boto3.client(
             'bedrock-runtime',
             region_name=Config.AWS_REGION,
-            aws_access_key_id=Config.AWS_ACCESS_KEY,
-            aws_secret_access_key=Config.AWS_SECRET_KEY
+            aws_access_key_id=Config.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=Config.AWS_SECRET_ACCESS_KEY
         )
 
     def generate_response(self, query, context) -> str:
-        prompt = f"""You are a AI assistant helping a user understand EULA (End User License Agreement).
+        prompt = f"""You are a AI assistant helping a user understand EULA (End User License Agreement) and ToS (Terms of Service) Documents.
         Based on the following excerpts from legal documents, provide a clear, accurate, and helpful answer to the user's question: 
         
         Document Excerpts:
@@ -23,8 +23,10 @@ class BedrockLLM:
 
         Please provide a comprehensive answer that:
         1. Directly addresses the user's question
-        2. Provides answers only from the context
-        3. If you don't know something, please say say "I don't know".
+        2. Referencees specific sections from the document when relevant
+        3. Explains any legal terms in plain language
+        4. Highlights important implications or requirements
+        5. Notes if certain information is not available in the provided excerpts by simply stating "I don't know"
         
         Answer:
         """

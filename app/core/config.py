@@ -1,8 +1,8 @@
 import os
 
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
-load_dotenv(find_dotenv())
+load_dotenv()
 
 class Config:
     
@@ -24,7 +24,8 @@ class Config:
     CHROMA_API_KEY = os.getenv("CHROMA_API_KEY", "")
     CHROMA_TENANT = os.getenv("CHROMA_TENANT", "")
     CHROMA_DATABASE = os.getenv("CHROMA_DATABASE", "eula-docs")
-    COLLECTION_NAME = os.getenv("CHROMA_COLLECTION", "eula-docs")
+    COLLECTION_NAME = os.getenv("COLLECTION_NAME", "eula-docs")
+
 
     # Processing
 
@@ -37,4 +38,3 @@ class Config:
 
     # Local
     UPLOAD_DIR = os.getenv("UPLOAD_DIR", "./uploads")
-

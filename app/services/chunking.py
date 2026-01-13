@@ -4,7 +4,11 @@ from typing import Dict, List
 class SemanticChunker:
     @staticmethod
     def chunk_by_sentences(text: str, chunk_size: int, overlap: int) -> List[str]:
+        chunk_size = int(chunk_size)
+        overlap = int(overlap)
+        
         #Split by punctuation into sentences
+        text = re.sub(r"\s+", " ", text)
         sentences = re.split(r"(?<=[.!?])\s+", text)
         chunks = []
         current_chunk: List[str] = []
