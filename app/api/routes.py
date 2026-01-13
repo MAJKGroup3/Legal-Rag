@@ -1,11 +1,11 @@
 
 
-from datatime import datetime
+from datetime import datetime
 from typing import List
 
 # fast api imports
 
-from fastapi import APIRouter, HTTPExceptionm, UploadFile, File, BackgroundTasks
+from fastapi import APIRouter, HTTPException, UploadFile, File, BackgroundTasks
 
 # schema imports
 
@@ -148,4 +148,6 @@ async def health_check(request: Request):
         "timestamp": datetime.now().isoformat(),
         "documents_count": len(state.document_store),
         "chroma_collection" : Config.COLLECTION_NAME,
+
     }
+
