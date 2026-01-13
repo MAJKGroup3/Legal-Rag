@@ -8,3 +8,4 @@ chromadb
 sentence-transformers
 PyPDF2
 python-dotenv
+torch
