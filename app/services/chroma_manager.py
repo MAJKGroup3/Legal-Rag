@@ -28,7 +28,7 @@ class ChromaDBManager:
             {
                 "doc_id": doc_id,
                 "section": chunk.get("section", "unknown"),
-                "chunk_index": i,
+                "chunk_index": chunk.get("chunk_index", i),
             }
             for i, chunk in enumerate(chunks)
         ]
@@ -36,10 +36,7 @@ class ChromaDBManager:
         self.collection.add(ids=ids, documents=documents, embeddings=embeddings, metadatas=metadatas)
 
     def query(self, query_embedding: List[float], n_results: int = 5) -> Dict:
-        results = self.collection.query(query_embeddings=[query_embedding], n_results=n_results)
-        if results["documents"]:
-            results["documents"] = results["documents"][0]
-        return results
+        return self.collection.query(query_embeddings=[query_embedding], n_results=n_results)
 
     def delete_by_doc_id(self, doc_id: str):
         try:

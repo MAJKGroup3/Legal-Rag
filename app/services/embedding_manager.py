@@ -9,10 +9,8 @@ class EmbeddingManager:
 
     def embed_texts(self, texts: List[str]) -> List[List[float]]:
         embeddings = self.model.encode(texts, show_progress_bar=False)
-        if len(texts) > 1:
-            return embeddings[0].tolist()
         return embeddings.tolist()
 
     def embed_text(self, text: str) -> List[float]:
-        embedding = self.model.encode(text, show_progress_bar=False)
-        return embedding.tolist()
+        embedding = self.model.encode([text], show_progress_bar=False)
+        return embedding[0].tolist()
