@@ -13,6 +13,7 @@ class Config:
     BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID",
     "anthropic.claude-3-sonnet-20240229-v1:0")  
     PROCESSED_BUCKET = os.getenv("PROCESSED_BUCKET", "processed-eula-docs")
+    RAW_BUCKET = os.getenv("RAW_BUCKET", "raw-eula-docs")
 
     # Chroma cloud
 
