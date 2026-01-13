@@ -13,7 +13,7 @@ class BedrockLLM:
 
     def generate_response(self, query, context) -> str:
         prompt = f"""You are a AI assistant helping a user understand EULA (End User License Agreement) and ToS (Terms of Service) Documents.
-        Based on the following excerpts from legal documents, provide a clear, accurate, and helpful answer to the user's question: 
+        Use ONLY the following excerpts from legal documents, provide a clear, accurate, and helpful answer to the user's question. If the answer is not in the provided excerpts, simply state "I don't know": 
         
         Document Excerpts:
         {context}
@@ -26,7 +26,6 @@ class BedrockLLM:
         2. Referencees specific sections from the document when relevant
         3. Explains any legal terms in plain language
         4. Highlights important implications or requirements
-        5. Notes if certain information is not available in the provided excerpts by simply stating "I don't know"
         
         Answer:
         """
