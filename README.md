@@ -71,14 +71,14 @@ Legal-Rag/
 │  │  ├─ document_processor.py# End-to-end ingestion pipeline
 │  │  └─ rag_system.py        # Retrieval + generation orchestration
 │  └─ ui/
-│  │  ├─ routes.py            # UI routes
-│  │  ├─ static/
-│  │  │  ├─ css/
-│  │  │  │  └─ style.css
-│  │  │  └─ js/
-│  │  │     └─ main.js
-│  │  └─ templates/
-│  │     └─ index.html        # Web interface
+│     ├─ routes.py            # UI routes
+│     ├─ static/
+│     │  ├─ css/
+│     │  │  └─ style.css      # CSS styles for interface
+│     │  └─ js/
+│     │     └─ main.js        # Functions for interface interaction
+│     └─ templates/
+│        └─ index.html        # Web interface
 ├─ requirements.txt
 ├─ .env.example
 └─ README.md
