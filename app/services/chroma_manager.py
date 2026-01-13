@@ -33,7 +33,9 @@ class ChromaDBManager:
             for i, chunk in enumerate(chunks)
         ]
 
-        self.collection.add(ids=ids, documents=documents, embeddings=embeddings, metadatas=metadatas)
+        self.collection.upsert(
+            ids=ids, documents=documents, embeddings=embeddings, metadatas=metadatas
+        )
 
     def query(self, query_embedding: List[float], n_results: int = 5) -> Dict:
         return self.collection.query(query_embeddings=[query_embedding], n_results=n_results)
