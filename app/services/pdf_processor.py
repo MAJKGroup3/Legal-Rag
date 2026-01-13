@@ -42,8 +42,16 @@ class PDFProcessor:
             raise TypeError("text must be a string")
 
         try:
-            text = re.sub(r"\s+", " ", text)
-            text = re.sub(r"[^\w\s.,;:!?()\-\'\"]+", "", text)
+            text = text.replace("\r\n", "\n").replace("\r", "\n")
+
+            # collapse spaces and tabs ONLY (preserve newlines)
+            text = re.sub(r"[ \t]+", " ", text)
+
+            # limit excessive blank lines
+            text = re.sub(r"\n{3,}", "\n\n", text)
+
+            # keep punctuation + newlines
+            text = re.sub(r"[^\w\s.,;:!?()\-\'\"\n]+", "", text)
             return text.strip()
         except Exception as e:
             raise ValueError("Failed cleaning text") from e
