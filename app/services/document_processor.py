@@ -15,27 +15,44 @@ class DocumentProcessor:
         self.chroma_manager = ChromaDBManager()
 
     def process_document(self, pdf_bytes, filename):
-        text = self.pdf_processor.extract_text(pdf_bytes)
-        clean_text = self.pdf_processor.clean_text(text)
-        metadata = self.pdf_processor.extract_metadata(clean_text, filename)
+        stage = "text_extraction"
+        try:
+            text = self.pdf_processor.extract_text(pdf_bytes)
 
-        chunks = self.chunker.chunk_by_sections(
-            clean_text, Config.CHUNK_SIZE, Config.CHUNK_OVERLAP
-        )
+            stage = "text_cleaning"
+            clean_text = self.pdf_processor.clean_text(text)
 
-        chunk_texts = [chunk["text"] for chunk in chunks]
-        embeddings = self.embedding_manager.embed_texts(chunk_texts)
+            if not clean_text.strip():
+                raise ValueError("No extractable text found")
 
-        doc_id = hashlib.md5(filename.encode()).hexdigest()
-        self.chroma_manager.add_chunks(chunks, doc_id, embeddings)
+            stage = "metadata"
+            metadata = self.pdf_processor.extract_metadata(clean_text, filename)
 
-        self.s3_manager.upload_file(
-            Config.RAW_BUCKET, filename, pdf_bytes, "application/pdf"
-        )
+            stage = "chunking"
+            chunks = self.chunker.chunk_by_sections(
+                clean_text, Config.CHUNK_SIZE, Config.CHUNK_OVERLAP
+            )
 
-        return {
-            "doc_id": doc_id,
-            "filename": filename,
-            "metadata": metadata,
-            "chunk_count": len(chunks)
-        }
+            stage = "embedding"
+            chunk_texts = [c["text"] for c in chunks]
+            embeddings = self.embedding_manager.embed_texts(chunk_texts)
+
+            stage = "vector_store"
+            doc_id = hashlib.md5(filename.encode()).hexdigest()
+            self.chroma_manager.add_chunks(chunks, doc_id, embeddings)
+
+            stage = "s3_upload"
+            self.s3_manager.upload_file(
+                Config.RAW_BUCKET, filename, pdf_bytes, "application/pdf"
+            )
+
+            return {
+                "doc_id": doc_id,
+                "filename": filename,
+                "metadata": metadata,
+                "chunk_count": len(chunks),
+            }
+
+        except Exception as e:
+            raise RuntimeError(f"[{stage}] Failed processing '{filename}': {e}") from e
+
