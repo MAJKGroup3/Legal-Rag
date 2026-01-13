@@ -2,7 +2,6 @@ from typing import Dict, List
 import chromadb
 from app.core.config import Config
 
-
 class ChromaDBManager:
     def __init__(self):
         self.client = chromadb.CloudClient(
@@ -33,12 +32,31 @@ class ChromaDBManager:
             for i, chunk in enumerate(chunks)
         ]
 
-        self.collection.upsert(
-            ids=ids, documents=documents, embeddings=embeddings, metadatas=metadatas
+        self.collection.add(
+            ids=ids,
+            documents=documents,
+            embeddings=embeddings,
+            metadatas=metadatas
         )
 
     def query(self, query_embedding: List[float], n_results: int = 5) -> Dict:
-        return self.collection.query(query_embeddings=[query_embedding], n_results=n_results)
+        results = self.collection.query(query_embeddings=[query_embedding], n_results=n_results)
+
+        # Filter out any chunks with negative relevance (distance < 0)
+        if "distances" in results and results["distances"]:
+            filtered_ids, filtered_docs, filtered_meta, filtered_dist = [], [], [], []
+            for i, dist in enumerate(results["distances"][0]):
+                if dist < 1:  # keep only non-negative relevance
+                    filtered_ids.append(results["ids"][0][i])
+                    filtered_docs.append(results["documents"][0][i])
+                    filtered_meta.append(results["metadatas"][0][i])
+                    filtered_dist.append(dist)
+            results["ids"][0] = filtered_ids
+            results["documents"][0] = filtered_docs
+            results["metadatas"][0] = filtered_meta
+            results["distances"][0] = filtered_dist
+
+        return results
 
     def delete_by_doc_id(self, doc_id: str):
         try:
