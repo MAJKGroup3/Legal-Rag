@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EULA/ToS RAG System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 EULA/ToS RAG System</h1>
+            <p class="subtitle">Semantic Search & Question Answering for Legal Documents</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="card">
+                <h2>📤 Upload Document</h2>
+                <div class="upload-area" id="uploadArea">
+                    <p>📁 Click or drag PDF file here</p>
+                    <input type="file" id="fileInput" accept=".pdf">
+                    <div class="file-info" id="fileInfo"></div>
+                </div>
+                <button id="uploadBtn" disabled>Upload & Process</button>
+                <div class="success-message" id="uploadSuccess"></div>
+                <div class="error-message" id="uploadError"></div>
+            </div>
+
+            <div class="card">
+                <h2>🔍 Query Documents</h2>
+                <textarea id="queryInput"
+                    placeholder="Ask a question about your EULA/ToS documents...&#10;&#10;Example: What is the data retention policy?"></textarea>
+                <button id="queryBtn">Search</button>
+            </div>
+
+            <div class="card results">
+                <h2>📊 Results</h2>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 10px; color: #666;">Processing...</p>
+                </div>
+                <div id="resultsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
