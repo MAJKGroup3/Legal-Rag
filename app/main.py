@@ -20,7 +20,14 @@ def create_app() -> FastAPI:
     )
 
     # Mount static files (CSS, JS) for frontend
-    app.mount("/static", StaticFiles(directory="app/ui/static"), name="static")
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+    app.mount(
+        "/static",
+        StaticFiles(directory=os.path.join(BASE_DIR, "ui", "static")),
+        name="static",
+    )
+
 
     # CORS
     app.add_middleware(
