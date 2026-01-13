@@ -1,6 +1,6 @@
 
 
-from datatime import datetime
+from datetime import datetime
 from typing import List
 
 # fast api imports
@@ -148,4 +148,5 @@ async def health_check(request: Request):
         "timestamp": datetime.now().isoformat(),
         "documents_count": len(state.document_store),
         "chroma_collection" : Config.COLLECTION_NAME,
+
     }
