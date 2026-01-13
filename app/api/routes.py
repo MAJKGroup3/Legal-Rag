@@ -5,7 +5,7 @@ from typing import List
 
 # fast api imports
 
-from fastapi import APIRouter, HTTPExceptionm, UploadFile, File, BackgroundTasks
+from fastapi import APIRouter, HTTPException, UploadFile, File, BackgroundTasks
 
 # schema imports
 
@@ -150,3 +150,4 @@ async def health_check(request: Request):
         "chroma_collection" : Config.COLLECTION_NAME,
 
     }
+
