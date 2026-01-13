@@ -203,9 +203,9 @@ http://localhost:8000
 **LegalRAG** — making complex legal documents understandable through grounded AI.
 
 #### Contributors:
--- Matthew
--- Michael
--- Arnav
--- Jason
--- Jonel
--- Kevin
+- Matthew
+- Michael
+- Arnav
+- Jason
+- Jonel
+- Kevin
