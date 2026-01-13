@@ -130,7 +130,7 @@ function displayResults(data) {
     data.retrieved_chunks.forEach((chunk, idx) => {
         html += `
                 <div class="result-item">
-                    <div class="chunk-section">Section: ${chunk.metadata.section}</div>
+                    <div class="chunk-section">${chunk.metadata.section}</div>
                     <div class="chunk-text">${chunk.text.slice(0, 430)}...</div>
                     ${chunk.distance ? `<div style="margin-top: 10px; color: #999; font-size: 0.9em;">Relevance: ${(1 - chunk.distance).toFixed(3)}</div>` : ''}
                 </div>
