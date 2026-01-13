@@ -7,3 +7,4 @@ boto3
 chromadb
 sentence-transformers
 PyPDF2
+python-dotenv
