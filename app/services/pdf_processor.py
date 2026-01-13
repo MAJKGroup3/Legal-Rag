@@ -31,4 +31,14 @@ class PDFProcessor:
             "char_count": len(text)
         }
 
+        text_lower = text.lower()
+        if ("end user license agreement" in text_lower) or ("eula" in text_lower):
+            metadata["doc_type"] = "EULA"
+        elif ("terms of service" in text_lower) or ("tos" in text_lower) or ("terms and conditions" in text_lower):
+            metadata["doc_type"] = "ToS"
+        elif ("privacy policy" in text_lower):
+            metadata["doc_type"] = "Privacy Policy"
+        else:
+            metadata["doc_type"] = "Other"
+
         return metadata
