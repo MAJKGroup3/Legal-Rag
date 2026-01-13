@@ -10,7 +10,7 @@ class RAGSystem:
         self.chroma_manager = ChromaDBManager()
         self.bedrock_llm = BedrockLLM()
 
-    def query(self, query, top_k: int = Config.TOP_K_ChUNKS) -> Dict:
+    def query(self, query, top_k: int = Config.TOP_K_CHUNKS) -> Dict:
         query_embedding = self.embedding_manager.get_embedding(query)
         results = self.chroma_manager.similarity_search_by_vector(query_embedding, k=top_k)
 
