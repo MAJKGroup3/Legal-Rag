@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.core.config import Config
 from app.core.state import AppState
@@ -17,6 +18,9 @@ def create_app() -> FastAPI:
         description="Semantic search and question answering for EULA and Terms of Service documents",
         version="1.0.0",
     )
+
+    # Mount static files (CSS, JS) for frontend
+    app.mount("/static", StaticFiles(directory="app/ui/static"), name="static")
 
     # CORS
     app.add_middleware(
