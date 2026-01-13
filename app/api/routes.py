@@ -1,7 +1,7 @@
-
+from __future__ import annotations
 
 from datetime import datetime
-from typing import List
+from typing import List, Dict, Any
 
 # fast api imports
 
@@ -14,9 +14,11 @@ from app.api.schemas import DocumentInfo, QueryRequest, QueryResponse, UploadRes
 from app.core.config import Config
 from app.core.state import AppState
 
+from app.agents.legalrag_agent import build_agent, extract_agent_text, extract_agent_response
+
 # Router
 router = APIRouter()
-
+agent = build_agent()
 
 def get_state(request: Request) -> AppState:
     return request.app.state.app_state
@@ -75,6 +77,31 @@ async def query_documents(request: Request, body: QueryRequest):
         )
     except Exception as e:
         raise HTTPException(status_code = 500, detail = f"Error processing query: {str(e)}")
+
+
+@router.post("/agent-query")
+async def agent_query(request: Request, body: QueryRequest):
+    """
+    Agent-based query router:
+    - Uses rag_query for corpus-grounded questions
+    - Uses get_weather for weather questions
+    """
+    try:
+        result = agent.invoke(
+            {"messages": [{"role": "user", "content": body.query}]}
+        )
+        agent_data = extract_agent_response(result)
+
+        return {
+            "query": body.query,
+            "answer": agent_data["answer"],
+            "retrieved_chunks": agent_data["retrieved_chunks"],
+            "num_chunks": agent_data["num_chunks"],
+            "timestamp": datetime.now().isoformat(),
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing agent query: {str(e)}")
 
 
 # GET /documents

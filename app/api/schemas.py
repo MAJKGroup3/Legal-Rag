@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any
 
 class QueryRequest(BaseModel): 
     query: str
@@ -43,5 +43,12 @@ class UploadResponse(BaseModel):
     
     chunk_count: int
 
+class AgentQueryRequest(BaseModel):
+    query: str
 
-
+class AgentQueryResponse(BaseModel):
+    query: str
+    answer: str
+    tool_used: Optional[str] = None
+    tool_result: Optional[Dict[str, Any]] = None
+    timestamp: str

@@ -95,7 +95,7 @@ queryBtn.addEventListener('click', async () => {
     resultsContainer.innerHTML = '';
 
     try {
-        const response = await fetch('/query', {
+        const response = await fetch('/agent-query', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
