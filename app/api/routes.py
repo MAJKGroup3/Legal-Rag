@@ -78,7 +78,7 @@ async def query_documents(request: Request, body: QueryRequest):
 
 
 # GET /documents
-@router.get("/documents", reponse_model = list[DocumentInfo])
+@router.get("/documents", response_model = list[DocumentInfo])
 async def list_documents(request: Request):
     state = get_state(request)
 
@@ -148,7 +148,4 @@ async def health_check(request: Request):
         "timestamp": datetime.now().isoformat(),
         "documents_count": len(state.document_store),
         "chroma_collection" : Config.COLLECTION_NAME,
-
     }
-
-
