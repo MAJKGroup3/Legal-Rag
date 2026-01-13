@@ -200,11 +200,12 @@ http://localhost:8000
 
 ---
 
-## License
-
-This project is provided for educational and internal tooling purposes.
-Review security, compliance, and licensing requirements before deploying to production environments.
-
----
-
 **LegalRAG** — making complex legal documents understandable through grounded AI.
+
+#### Contributors:
+-- Matthew
+-- Michael
+-- Arnav
+-- Jason
+-- Jonel
+-- Kevin
